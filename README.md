@@ -14,299 +14,282 @@ Focusing on the philosophy of continuous improvement, KaizenSpark Tech Solutions
 
 ### Open Source
 We maintain a variety of internal tools and libraries focused on improving development workflows and system reliability.
-🌐 1️⃣ CORPORATE WEBSITE
+🏢 KAIZENSPARK DIGITAL ECOSYSTEM
+Multi-Portal Enterprise Architecture
+📌 1️⃣ PROJECT INTRODUCTION
 
-kaizenspark.com
+KaizenSpark is designed as a multi-platform enterprise system consisting of three independent yet connected applications:
 
-🎯 Purpose:
+🌐 Corporate Website – Marketing & Lead Generation
 
-To attract and convert business clients.
+🔐 Client Portal – Project & Operations Management
 
-This is your public face.
+🎓 Internship Platform – Training & Certification Management
 
-👥 Who uses it?
+All systems operate under one unified backend and database architecture, ensuring scalability, security, and clean separation of concerns.
 
-CTOs
+🏗 2️⃣ HIGH-LEVEL ARCHITECTURE DIAGRAM
+                          ┌─────────────────────────┐
+                          │      Public Users       │
+                          │  (CTOs, Founders, etc.) │
+                          └────────────┬────────────┘
+                                       │
+                              🌐 Corporate Website
+                                 (React - Public)
+                                       │
+                                       │ Contact / Lead API
+                                       ▼
+ ┌──────────────────────────────────────────────────────────────┐
+ │                       FASTAPI BACKEND                        │
+ │--------------------------------------------------------------│
+ │  • Authentication (JWT)                                      │
+ │  • Role-Based Access Control                                 │
+ │  • Project Management Logic                                  │
+ │  • Internship Management Logic                               │
+ │  • Invoice System                                            │
+ │  • Certificate Engine                                        │
+ │  • File Handling                                             │
+ └───────────────┬───────────────────────────────┬──────────────┘
+                 │                               │
+                 │                               │
+        ┌────────▼────────┐             ┌────────▼────────┐
+        │  Client Portal  │             │ Internship Portal│
+        │  (React App)    │             │   (React App)    │
+        └────────┬────────┘             └────────┬────────┘
+                 │                                 │
+                 └──────────────┬──────────────────┘
+                                ▼
+                      PostgreSQL Database
+               (Users, Projects, Tasks, Invoices,
+                Internship Data, Certificates, etc.)
+🧱 3️⃣ TECH STACK ARCHITECTURE
+🔹 Frontend Layer (3 Separate React Apps)
+Platform	Tech Used	Purpose
+Corporate	React	Marketing
+Client Portal	React + Axios	Project tracking
+Intern Portal	React + Axios	Internship management
 
-Founders
+Each frontend:
 
-Business owners
+Handles UI
 
-Operations heads
+Stores JWT token
 
-Foreign clients
+Sends REST API requests
 
-They visit to:
+Does NOT directly access database
 
-Understand what KaizenSpark does
+🔹 Backend Layer (Single Central API)
 
-See capabilities
+Tech Stack:
 
-View case studies
+FastAPI
 
-Check technology stack
+SQLAlchemy
 
-Book consultation
+Pydantic
 
-🧱 What it contains:
+JWT (Authentication)
 
-Hero section (Enterprise positioning)
+bcrypt (Password security)
 
-Services
+Responsibilities:
 
-Industries served
+Authentication & Authorization
 
-Case studies
+Business Logic
 
-Technology stack
+Progress Calculation
 
-Security & compliance
+Invoice Generation
 
-Contact form + Calendly booking
+Certificate Generation
 
-Download company profile PDF
+Data Validation
 
-🧠 What it does NOT do:
+Secure File Access
 
-No login
+Backend is the core engine of the system.
 
-No dashboards
+🔹 Database Layer
 
-No project tracking
+Tech:
 
-No intern content
+PostgreSQL
 
-No casual language
+Stores:
 
-💡 Think of it as:
+Client System:
 
-🏢 Your corporate office reception.
+Users
 
-It builds:
+Projects
 
-Trust
-
-Authority
-
-Professional image
-
-Lead generation
-
-🔐 2️⃣ CLIENT PORTAL
-
-portal.kaizenspark.com
-
-🎯 Purpose:
-
-To manage real client projects after they sign a contract.
-
-This is your internal + client control system.
-
-👥 Who uses it?
-
-Internal:
-
-Super Admin (you)
-
-Project Manager
-
-Developers
-
-Finance team
-
-External:
-
-Clients (only their own projects)
-
-🧱 What it does:
-🔑 Login System
-
-Secure login
-
-JWT authentication
-
-Role-based access
-
-📊 Dashboard
-
-Shows:
-
-Active projects
-
-Progress %
-
-Budget
-
-Upcoming milestones
+Milestones
 
 Invoices
 
-Activity feed
+Documents
 
-📂 Project Management
+Tickets
 
-Create project
+Intern System:
 
-Assign client
+Internship Programs
 
-Add milestones
+Tasks
 
-Update status
+Submissions
 
-Track progress
+Reviews
 
-📁 Document Vault
+Certificates
 
-Upload contracts
+Corporate:
 
-Upload deliverables
+Contact Leads
 
-Upload architecture docs
+Data is separated logically using:
 
-Secure downloads
+Role-based filtering
 
-💰 Invoice System
+Foreign key constraints
 
-Generate invoice
+🔄 4️⃣ COMPLETE WORKFLOW EXPLANATION
+🌐 Corporate Website Workflow
 
-Mark paid/unpaid
+Visitor → Views services
+→ Downloads profile
+→ Submits contact form
+→ Backend stores lead in DB
 
-Track due date
+No login
+No dashboard
+Public access only
 
-Export PDF
+🔐 Client Portal Workflow
 
-🎫 Support Tickets
+Client logs in
+→ Backend validates credentials
+→ JWT issued
+→ Client dashboard loads projects
 
-Client raises issue
+Project Manager updates milestone
+→ Backend updates DB
+→ Progress recalculated
+→ Client sees updated percentage
 
-Internal team responds
+Finance generates invoice
+→ PDF created
+→ Status updated
 
-Track resolution
+This is real-time operational control.
 
-🧠 Why this exists:
+🎓 Internship Platform Workflow
 
-Foreign clients expect:
+Intern registers
+→ Admin approves
+→ Task assigned
+→ Intern submits GitHub link
+→ Mentor reviews
+→ Score saved
+→ Certificate auto-generated
 
-Transparency
+Fully structured learning workflow.
 
-Professional project tracking
+🔐 5️⃣ SECURITY ARCHITECTURE
 
-Organized documentation
+Role-Based Access Control (RBAC):
 
-Clear invoice management
+Roles:
 
-💡 Think of it as:
+super_admin
 
-🏢 Your company operations headquarters.
+project_manager
 
-This is where real work is tracked.
+developer
 
-🎓 3️⃣ INTERNSHIP PLATFORM
+finance
 
-intern.kaizenspark.com
+client
 
-🎯 Purpose:
+intern
 
-To manage structured internship programs.
+mentor
 
-Completely separate system.
+Backend checks role before responding.
 
-👥 Who uses it?
+Example:
 
-Internship Admin
+Client can only see their projects
 
-Mentors
+Intern cannot access client data
 
-Interns
+Finance cannot modify internship data
 
-🧱 What it does:
-📚 Program Management
+JWT protects all private endpoints.
 
-Internship title
+📁 6️⃣ GITHUB MONOREPO STRUCTURE
+kaizenspark-ecosystem/
 
-Duration
+├── corporate-site/
+│   └── React app
+│
+├── client-portal/
+│   └── React dashboard
+│
+├── intern-platform/
+│   └── React LMS
+│
+├── backend/
+│   ├── main.py
+│   ├── routes/
+│   ├── models/
+│   ├── services/
+│   ├── auth/
+│   └── requirements.txt
+│
+├── database/
+│   └── schema.sql
+│
+└── docs/
+🚀 7️⃣ DEPLOYMENT ARCHITECTURE
+Corporate Site  → Vercel
+Client Portal   → Vercel
+Intern Portal   → Vercel
+Backend API     → Render / Railway
+Database        → Neon (PostgreSQL Cloud)
 
-Domain
+Environment Variables:
 
-🧑‍💻 Task System
+DATABASE_URL
 
-Assign tasks
+JWT_SECRET
 
-Set deadline
+SECRET_KEY
 
-Upload submission
+🎯 FINAL ARCHITECTURE SUMMARY
 
-Add GitHub link
+We are building:
 
-📝 Mentor Review
+✅ A marketing platform
+✅ A client operations ERP
+✅ A structured internship management system
 
-Approve / reject
+Using:
 
-Feedback
+React (Presentation Layer)
 
-Score
+FastAPI (Application Layer)
 
-🎓 Certificate Engine
+PostgreSQL (Data Layer)
 
-Auto-generate PDF
+Following:
 
-Unique ID
+3-tier architecture
 
-(Optional: QR verification)
+Role-based access control
 
-💳 Payment (if paid internship)
+Secure API-driven communication
 
-Enrollment tracking
-
-Payment confirmation
-
-Invoice
-
-🧠 Why this exists:
-
-Structured intern training
-
-Controlled submissions
-
-Certificate automation
-
-No manual tracking
-
-💡 Think of it as:
-
-🎓 A mini learning management system.
-
-🏗 How All 3 Work Together
-Platform	Public?	Login?	Database?	Purpose
-Corporate	Yes	No	Minimal	Marketing + Lead generation
-Portal	No	Yes	Yes	Client project management
-Intern	No	Yes	Yes	Internship management
-⚠ Important Separation
-
-Corporate site should NEVER show internship marketing.
-
-Internship platform should not affect client portal.
-
-Portal must be secure and clean.
-
-🎯 Simple Real-World Example
-
-Imagine TCS:
-
-🌐 tcs.com → Corporate website
-
-🔐 client.tcs.com → Client dashboard
-
-🎓 careers.tcs.com → Internal programs
-
-You are building a smaller but structured version of that.
-
-🔥 Final Understanding
-
-You are building:
-
-1️⃣ A marketing machine
-2️⃣ An enterprise operations system
-3️⃣ A training platform
-
-All under one brand.
+Modular system design
